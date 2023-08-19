@@ -3,9 +3,9 @@ import pandas as pd
 import json
 from typing import Union
 
-def prov_interface(
+def prov_serial_interface(
     series_id: int, 
-    rows: int=100) -> dict:
+    rows: int=100) -> Union[dict, None]:
     """
     Interface to PROV api using series id to search and limiting the number of rows
 
@@ -15,6 +15,35 @@ def prov_interface(
     """
 
     url = f'https://api.prov.vic.gov.au/search/query?rows={rows}&sort=Series_title%20asc&wt=json&q=(series_id%3A({series_id}))%20AND%20((record_form%3A%22Photograph%20or%20Image%22))'
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Raise an exception for any HTTP error status
+
+    except requests.exceptions.RequestException as e:
+        print("Error fetching URL:", e)
+
+    # slight error handling
+    d = json.loads(response.text)
+
+    if d['response']['numFound'] == 0:
+        return None
+
+    else: 
+        return d
+
+def prov_kw_interface(
+    keyword: str,
+    rows: int=100,
+)-> Union[dict, None]:
+    """
+    Interface to PROV api using keyword to search and limiting the number of rows
+
+    Will return None if:
+    - no search found. 
+
+    """
+    
+    url = f'https://api.prov.vic.gov.au/search/query?rows={rows}&wt=json&q=(text%3A%22{keyword}%22)%20AND%20((record_form%3A%22Photograph%20or%20Image%22))'
     try:
         response = requests.get(url)
         response.raise_for_status()  # Raise an exception for any HTTP error status
@@ -45,7 +74,7 @@ def update_link(
     return "/".join(link_split)
 
 def make_data(
-    series_id: str, 
+    search_key: Union[int, str], 
     rows: int=100, 
     prefered_size: tuple[int, int]=(500,500)) -> pd.DataFrame:
     """
@@ -56,8 +85,13 @@ def make_data(
     - No image file in result.  
     """
 
+    if isinstance(search_key, str):
+        data_dict = prov_kw_interface(search_key)
+    elif isinstance(search_key, int):
+        data_dict = prov_serial_interface(search_key)
+    else:
+        return None
 
-    data_dict = prov_interface(series_id)
     if data_dict is None:
         return None
 
