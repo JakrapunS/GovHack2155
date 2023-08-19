@@ -11,6 +11,7 @@ import numpy
 from transformers import BlipProcessor, BlipForConditionalGeneration
 ImageList=[]
 import csv
+from data_collection import * 
 
 
 
@@ -31,12 +32,18 @@ def CaptionView():
     return render_template('Caption.html')
 
 
+@app.route('/CaptionPVOAView')
+def CaptionPVOAView():
+    return render_template('captionPVOA.html')
+
+
 @app.route('/CaptionLink', methods=['GET', 'POST'])
 def CaptionLink():
     global loaded_processor
     global loaded_model
     if request.method == 'POST':
         imageLink = request.form['imageLink']
+
         tempDict={'ImageLink':imageLink,'Description':''}
         with open('blip_model_zero.pkl', 'rb') as f:
             loaded_model = pickle.load(f)
@@ -57,6 +64,43 @@ def CaptionLink():
 
         ImageList.append(tempDict)
     return render_template('Caption.html',ImageList=ImageList)
+
+
+
+@app.route('/PVOA_Series_IMAGE', methods=['GET', 'POST'])
+def PVOA_Series_IMAGE():
+    global loaded_processor
+    global loaded_model
+    if request.method == 'POST':
+        SeriesID = request.form['SeriesID']
+        actualData=make_data(SeriesID)
+        actualData=actualData.sample(n=5)
+        with open('blip_model_zero.pkl', 'rb') as f:
+                loaded_model = pickle.load(f)
+
+        with open('blip_processor_zero.pkl', 'rb') as f:
+                loaded_processor = pickle.load(f)
+
+        for index, row in actualData.iterrows():
+            tempDict={'ImageLink':row['link'],'Description':'','old_Desc':row['description']}
+           
+
+        # Load the processor
+            
+
+            image2 = Image.open(requests.get(row['link'], stream=True).raw).convert('RGB')
+
+            inputs = loaded_processor(image2, return_tensors="pt")
+
+            out = loaded_model.generate(**inputs)
+            description=loaded_processor.decode(out[0], skip_special_tokens=True)
+            
+            tempDict['Description']=description.replace("arafed","")
+
+            ImageList.append(tempDict)
+    return render_template('captionPVOA.html',ImageList=ImageList)
+
+
     
 @app.route('/remove-item/<int:index>', methods=['GET'])
 def remove_item(index):
@@ -72,7 +116,9 @@ def SaveCaption(index):
       
         ImageLink = request.form['ImageLink']
         Description = request.form['Description']
+
         MetadData={}
+        
         
         temp={'imageLink':ImageLink,'Description':Description,'MetadataDump':MetadData}
 

@@ -16,23 +16,30 @@
 
         <a class="nav-link" aria-current="page" href="/">Home</a>
        
-        <a class="nav-link active" href="/CaptionView">Image Captioning</a>
-        <a class="nav-link " href="/CaptionPVOAView">PVOA Images </a>
+        <a class="nav-link" href="/CaptionView">Image Captioning</a>
+
+        <a class="nav-link active" href="/CaptionPVOAView">PVOA Images </a>
 
       </nav>
       <br>
      
      
 <div class="container">
-<h1> Image Captioning</h1>
+<h1> PVOA Image Description</h1>
 
 
 
-<form action="/CaptionLink" method = "POST">
-    <div class="col-md-4">
-        <label for="imageLink" class="form-label">Image Link</label>
-        <input type="text" class="form-control"  aria-describedby="emailHelp" name="imageLink" required>        
-    </div>
+<form action="/PVOA_Series_IMAGE" method = "POST">
+    <label for="SeriesID">Select Series:</label>
+    <select id="SeriesID" name="SeriesID">
+        <option value="10742">10742</option>
+        <!-- <option value="12800">12800</option>
+        <option value="12903">12903</option>
+        <option value="1396">1396</option> -->
+        <option value="14517">14517</option>
+
+        <option value="8357">8357</option>
+    </select>
    
     <br><button type="submit" class="btn btn-primary">Submit</button></br>
 </form>
@@ -49,7 +56,8 @@
       
           <div class="card col-md-8">
         
-          <h2>Description: {{image.Description}}</h2>
+          <h2>Model's Description: {{image.Description}}</h2>
+          <h4><h2>Description From PVOA: {{image.old_Desc}}</h2></h4>
           <a href="/remove-item/{{ loop.index0 }}">
             <button>REMOVE</button>
           </a>
