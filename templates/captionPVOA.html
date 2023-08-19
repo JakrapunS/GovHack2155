@@ -30,16 +30,15 @@
 
 
 <form action="/PVOA_Series_IMAGE" method = "POST">
-    <label for="SeriesID">Select Series:</label>
+    Available Series:10742,14517,8357 <br>
+    You can type any of the above number for Search as well.<br>
+    <!-- <label for="SeriesID">Select Series:</label>
     <select id="SeriesID" name="SeriesID">
         <option value="10742">10742</option>
-        <!-- <option value="12800">12800</option>
-        <option value="12903">12903</option>
-        <option value="1396">1396</option> -->
         <option value="14517">14517</option>
-
         <option value="8357">8357</option>
-    </select>
+    </select> -->
+    <input type="text" name="keyword" placeholder="Type your Search Word">
    
     <br><button type="submit" class="btn btn-primary">Submit</button></br>
 </form>
@@ -55,19 +54,42 @@
       <!-- LINK:{{image.ImageLink}} -->
       
           <div class="card col-md-8">
+            <div class="row">
+                <div class="card col-md-6">
+
+                <h4>Generated Description:<br> <br>{{image.Description}}</h4> <br>
+           
+                <a href="{{image.ImageLink}}">Image Link</a>
+                <div class="row">
+                    <div> 
+                            <form action="/SaveCaption-PVOA/{{ loop.index0 }}" method = "POST">
+                                <!-- <input type="text"  id="tags" name="tags" value="{{image.tags}}"> -->
+                                Tags:
+                                <textarea rows="4" cols="50" type="text"  id="tags" name="tags" >{{image.tags}}</textarea>
+                                <input type="text" id="ImageLink" name="ImageLink" value="{{image.ImageLink}}" hidden/><br>
+                                <input type="text" id="Description" name="Description"  value="{{image.Description}}" hidden /><br>
+                                <button type="submit">👍 </button>
+                        </form>
+                    </div>
+                    <div> 
+                        <a href="/remove-item-PVOA/{{ loop.index0 }}">
+                            <button>👎</button>
+                    
+                         </a>
+                        </div>
+            </div>
+                </div>
+                <div class="card col-md-6">
+                <h4>Original Description:<br> <br>  {{image.old_Desc}}</h4>
+                
+                </div>
+              
+                
+            </div>
         
-          <h2>Model's Description: {{image.Description}}</h2>
-          <h4><h2>Description From PVOA: {{image.old_Desc}}</h2></h4>
-          <a href="/remove-item/{{ loop.index0 }}">
-            <button>REMOVE</button>
-          </a>
 
 
-          <form action="/SaveCaption/{{ loop.index0 }}" method = "POST">
-            <input type="text" id="ImageLink" name="ImageLink" value="{{image.ImageLink}}" /><br>
-            <input type="text" id="Description" name="Description"  value="{{image.Description}}"  /><br>
-            <button type="submit">Publish Caption</button>
-      </form>
+        
 
           <br>
          
