@@ -40,7 +40,7 @@
     </select> -->
     <input type="text" name="keyword" placeholder="Type your Search Word">
    
-    <br><button type="submit" class="btn btn-primary">Submit</button></br>
+    <br><button type="submit" class="btn btn-primary">Submit</button></br></br></br></br>
 </form>
 
 
@@ -65,7 +65,7 @@
                             <form action="/SaveCaption-PVOA/{{ loop.index0 }}" method = "POST">
                                 <!-- <input type="text"  id="tags" name="tags" value="{{image.tags}}"> -->
                                 Tags:
-                                <textarea rows="4" cols="50" type="text"  id="tags" name="tags" >{{image.tags}}</textarea>
+                                <textarea rows="4" cols="45" type="text"  id="tags" name="tags" >{{image.tags}}</textarea>
                                 <input type="text" id="ImageLink" name="ImageLink" value="{{image.ImageLink}}" hidden/><br>
                                 <input type="text" id="Description" name="Description"  value="{{image.Description}}" hidden /><br>
                                 <button type="submit">👍 </button>

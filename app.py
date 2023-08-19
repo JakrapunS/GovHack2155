@@ -56,9 +56,9 @@ def tag_generate(img_url,model_vqa,processor_vqa, q_num):
       tag.add('people')
 
   if q_num >=2 :
-    # Question 1
-    question_1 = "What is the color of the photo?"
-    inputs = processor_vqa(raw_image, question_1, return_tensors="pt")
+    # Question 2
+    question_2 = "What is the setting of the image?"
+    inputs = processor_vqa(raw_image, question_2, return_tensors="pt")
     out = model_vqa.generate(**inputs)
     tag.add(processor_vqa.decode(out[0], skip_special_tokens=True))
     
@@ -85,11 +85,12 @@ def tag_generate(img_url,model_vqa,processor_vqa, q_num):
     tag.add(processor_vqa.decode(out[0], skip_special_tokens=True))
     
   if q_num >=6 :
-    # Question 2
-    question_2 = "What is the setting of the image?"
-    inputs = processor_vqa(raw_image, question_2, return_tensors="pt")
+    # Question 1
+    question_1 = "What is the color of the photo?"
+    inputs = processor_vqa(raw_image, question_1, return_tensors="pt")
     out = model_vqa.generate(**inputs)
     tag.add(processor_vqa.decode(out[0], skip_special_tokens=True))
+    
   if q_num >=7 :
     # Question 10
     question_10 = "Is there animal in the image?"

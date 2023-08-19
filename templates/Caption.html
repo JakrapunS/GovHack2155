@@ -55,16 +55,17 @@
          
           <a href="{{image.ImageLink}}">Image Link</a>
           
-          <a href="/remove-item/{{ loop.index0 }}">
-            <button>👎</button>
-          </a>
+          
           <form action="/SaveCaption/{{ loop.index0 }}" method = "POST">
             Tags:
-            <textarea rows="4" cols="50" type="text"  id="tags" name="tags">{{image.tags}}</textarea>
+            <textarea rows="4" cols="45" type="text"  id="tags" name="tags">{{image.tags}}</textarea>
             <input type="text" id="ImageLink" name="ImageLink" value="{{image.ImageLink}}" hidden/><br>
             <input type="text" id="Description" name="Description"  value="{{image.Description}}" hidden /><br>
             <button type="submit">👍</button>
       </form>
+      <a href="/remove-item/{{ loop.index0 }}">
+        <button>👎</button>
+      </a>
 
           <br>
          
