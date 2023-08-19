@@ -3,3 +3,4 @@ test/
 app1.py
 app2.py
 *.pkl
+requirement.txt
