@@ -1,6 +1,11 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <style>
+        .custom-card{
+            border-radius: 10px;
+        }
+    </style>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,14 +23,14 @@
        
         <a class="nav-link" href="/CaptionView">Image Captioning</a>
 
-        <a class="nav-link active" href="/CaptionPVOAView">PVOA Images </a>
+        <a class="nav-link " href="/CaptionPVOAView">PROV Images </a>
 
       </nav>
       <br>
      
      
 <div class="container">
-<h1> PVOA Image Description</h1>
+<h1> PROV Image Description</h1>
 
 
 
@@ -53,39 +58,47 @@
       
       <!-- LINK:{{image.ImageLink}} -->
       
-          <div class="card col-md-8">
-            <div class="row">
-                <div class="card col-md-6">
+          <div class="col-md-8 mx-auto d-block">
+            
+            <a href="{{image.archive_link}}" target="_blank">
+            <img class="col-md-8 mx-auto d-block" src="{{image.ImageLink}}"></a> <br>
+            <form action="/SaveCaption-PVOA/{{ loop.index0 }}" method = "POST">
 
-                <h4>Generated Description:<br> <br>{{image.Description}}</h4> <br>
-           
-                <a href="{{image.ImageLink}}">Image Link</a>
                 <div class="row">
-                    <div> 
-                            <form action="/SaveCaption-PVOA/{{ loop.index0 }}" method = "POST">
-                                <!-- <input type="text"  id="tags" name="tags" value="{{image.tags}}"> -->
-                                Tags:
-                                <textarea rows="4" cols="45" type="text"  id="tags" name="tags" >{{image.tags}}</textarea>
-                                <input type="text" id="ImageLink" name="ImageLink" value="{{image.ImageLink}}" hidden/><br>
-                                <input type="text" id="Description" name="Description"  value="{{image.Description}}" hidden /><br>
-                                <button type="submit">👍 </button>
-                        </form>
+                    <div class="card col-md-6 rounded custom-card" >
+
+                        <h4>Generated Description:</h4><br> <br>
+                        <textarea class="col-md-12 mx-auto"rows="2" cols="45" type="text"  id="Description" name="Description" >{{image.Description}}</textarea>
+                       
+                
+                        
+                   
                     </div>
-                    <div> 
-                        <a href="/remove-item-PVOA/{{ loop.index0 }}">
-                            <button>👎</button>
+                    <div class="card col-md-6 rounded custom-card">
+                    <h4>Original Description:</h4><br> <br>  
+                    <h6>{{image.old_Desc}}</h6>
                     
-                         </a>
-                        </div>
-            </div>
-                </div>
-                <div class="card col-md-6">
-                <h4>Original Description:<br> <br>  {{image.old_Desc}}</h4>
+                    </div>
                 
+                    
                 </div>
-              
+                <div class="row">
+                                <!-- <input type="text"  id="tags" name="tags" value="{{image.tags}}"> -->
+                                <br>
+                                <textarea class="col-md-12 mx-auto"rows="2" cols="45" type="text"  id="tags" name="tags" >{{image.tags}}</textarea> <br>
+                            
+                                <button class="col-md-1 d-inline-block" type="submit">👍 </button>
+                                <input type="text" id="ImageLink" name="ImageLink" value="{{image.ImageLink}}" hidden/>
+                                <!-- <input type="text" id="Description" name="Description"  value="{{image.Description}}" hidden /> -->
+                </div>
+            </form>
+            <div class="row">
+                    <a  href="/remove-item-PVOA/{{ loop.index0 }}">
+                        <button class="col-md-1 d-inline-block">👎</button>
                 
-            </div>
+                    </a>
+                </div>
+          
         
 
 
@@ -94,7 +107,7 @@
           <br>
          
 
-          <img src="{{image.ImageLink}}">
+         
 
          
 

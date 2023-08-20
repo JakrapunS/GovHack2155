@@ -17,7 +17,7 @@
         <a class="nav-link" aria-current="page" href="/">Home</a>
        
         <a class="nav-link active" href="/CaptionView">Image Captioning</a>
-        <a class="nav-link " href="/CaptionPVOAView">PVOA Images </a>
+        <a class="nav-link " href="/CaptionPVOAView">PROV Images </a>
 
       </nav>
       <br>
@@ -34,10 +34,10 @@
         <input type="text" class="form-control"  aria-describedby="emailHelp" name="imageLink" required>        
     </div>
    
-    <br><button type="submit" class="btn btn-primary">Submit</button></br>
+    <br><button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
-
+</br></br>
 
 
 
@@ -48,19 +48,23 @@
       <!-- LINK:{{image.ImageLink}} -->
       
           <div class="card col-md-8">
-        
-          <h2>Description: {{image.Description}}</h2>
+            <img class="col-md-8 mx-auto d-block" src="{{image.ImageLink}}">
+          <!-- <h4>Description: {{image.Description}}</h4> -->
          
           
          
-          <a href="{{image.ImageLink}}">Image Link</a>
+          <!-- <a href="{{image.ImageLink}}">Image Link</a> -->
           
           
           <form action="/SaveCaption/{{ loop.index0 }}" method = "POST">
+           
+            <h3>Description:</h3>
+            <textarea class="col-md-12 mx-auto"rows="2" cols="45" type="text"  id="Description" name="Description">{{image.Description}}</textarea>
+
             Tags:
-            <textarea rows="4" cols="45" type="text"  id="tags" name="tags">{{image.tags}}</textarea>
+            <textarea class="col-md-12 mx-auto"rows="2" cols="45" type="text"  id="tags" name="tags">{{image.tags}}</textarea>
             <input type="text" id="ImageLink" name="ImageLink" value="{{image.ImageLink}}" hidden/><br>
-            <input type="text" id="Description" name="Description"  value="{{image.Description}}" hidden /><br>
+            <!-- <input type="text" id="Description" name="Description"  value="{{image.Description}}" hidden /><br> -->
             <button type="submit">👍</button>
       </form>
       <a href="/remove-item/{{ loop.index0 }}">
@@ -70,7 +74,7 @@
           <br>
          
 
-          <img src="{{image.ImageLink}}">
+          
 
          
 

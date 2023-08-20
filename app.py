@@ -207,8 +207,8 @@ def PVOA_Series_IMAGE():
         for index, row in actualData.iterrows():
             tags=tag_generate(row['link'],loaded_model_vqa,loaded_processor_vqa,5)
             print(tags)
-            tempDict={'ImageLink':row['link'],'Description':'','old_Desc':row['description'],'tags':list(tags)}
-
+            tempDict={'ImageLink':row['link'],'Description':'','old_Desc':row['description'],'tags':list(tags),'archive_link':row['archive_link']}
+            print(row['archive_link'])
 
         # Load the processor
             
