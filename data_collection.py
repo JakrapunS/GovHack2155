@@ -73,6 +73,9 @@ def update_link(
 
     return "/".join(link_split)
 
+def section_link_builder(id: str):
+    return f"https://prov.vic.gov.au/archive/{id}"
+
 def make_data(
     search_key: Union[int, str], 
     rows: int=100, 
@@ -100,7 +103,8 @@ def make_data(
         if "iiif-thumbnail" in item.keys():
             details.append({
                 'link': update_link(item["iiif-thumbnail"], prefered_size),
-                'description': item["presentation_text"]
+                'description': item["presentation_text"],
+                'archive_link': section_link_builder(item["_id"]),
             })
 
     if len(details) == 0:
